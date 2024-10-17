@@ -1,23 +1,9 @@
 [
     {
-        "id": 1,
+        "id": 0,
         "description": "Create github account",
         "status": "To do",
-        "created_at": "24-10-16, 10:09:43",
-        "updated_at": "24-10-16, 10:09:43"
-    },
-    {
-        "id": 1,
-        "description": "Post code",
-        "status": "To do",
-        "created_at": "24-10-16, 10:09:43",
-        "updated_at": "24-10-16, 10:09:43"
-    },
-    {
-        "id": 1,
-        "description": "Finish project",
-        "status": "To do",
-        "created_at": "24-10-16, 10:09:43",
-        "updated_at": "24-10-16, 10:09:43"
+        "created_at": "24-10-17, 06:13:19",
+        "updated_at": "24-10-17, 06:13:19"
     }
 ]

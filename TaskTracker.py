@@ -1,6 +1,7 @@
 import json
 import datetime
 import os.path
+import sys
 
 class Task:
     def __init__(self, id, description, status, createdAt, updatedAt):
@@ -34,6 +35,11 @@ class Task:
                    task_dict['updated_at'])
         
 
+
+def add_task(taskList, description):
+    task = Task(generate_id(taskList),description, "To do", generate_date(), generate_date())
+    taskList.append(task)
+
 def generate_id(taskList):
     return len(taskList)
 
@@ -63,8 +69,6 @@ def list_all_task(taskList, status):
             print(f"Updated at: {task.updatedAt}")
             print("************************************")
             
-        
-    
 def delete_task(taskList, id):
      index=0
      result = False
@@ -102,6 +106,7 @@ def mark_done(taskList, id):
         else:
             index+=1
 
+#--------START--------
 taskList = list()
 
 #Check if json file exists, if exists read contents
@@ -112,21 +117,48 @@ if(fileExist):
         tasks_dict = json.load(f)
         taskList = [Task.from_dict(task) for task in tasks_dict]
 
+# total arguments
+n = len(sys.argv)
 
-print("Hello python")
+function = sys.argv[1]
 
-task1 = Task((get_last_index(taskList)+1), "New Task", "To do", generate_date(), generate_date())
-#taskList.append(task1)
+if(function == "add"):
+    taskDescription = sys.argv[2]
+    add_task(taskList, taskDescription)
+elif function == "update":
+    update_task(taskList, int(sys.argv[2]), sys.argv[3])
+elif function == "delete":
+    delete_task(taskList,int(sys.argv[2]))
+elif function == "mark-in-progress":
+    mark_in_progress(taskList, int(sys.argv[2]))
+elif function == "mark-done":
+    mark_done(taskList, int(sys.argv[2]))
+elif function == "list":
+    #if there is an argument for list command
+    if n >= 3:
+        parameter = sys.argv[2]
+        if parameter == "done":
+            print("Listing all done tasks")
+            print("************************************")
+            list_all_task(taskList,"Done")
+        elif parameter == "todo":
+            print("Listing all to do tasks")
+            print("************************************")
+            list_all_task(taskList, "To do")
+        elif parameter == "in-progress":
+            print("Listing all in progress tasks")
+            print("************************************")
+            list_all_task(taskList, "In progress")
+        else:
+            print(f"Parameter {parameter} does not match with any of options.")
+            print("Accepted parameters: done, todo, in-progress")
+    else:
+        print("Listing all tasks")
+        print("************************************")
+        list_all_task(taskList, "All")
 
-update_task(taskList,3,"Upload lo github")
-delete_task(taskList,16)
 
-mark_done(taskList,3)
-list_all_task(taskList, "To do")
 
 tasksdict = [task.to_dict() for task in taskList]
 with open('tasks.json','w') as f:
     json.dump(tasksdict, f, indent=4)
-
-
-

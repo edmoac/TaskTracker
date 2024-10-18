@@ -1,3 +1,4 @@
+from ast import arg
 import json
 import datetime
 import os.path
@@ -156,7 +157,9 @@ elif function == "list":
         print("Listing all tasks")
         print("************************************")
         list_all_task(taskList, "All")
-
+else:
+    print(f"Function {function} does not exist.")
+    print(f"Accepted functions: add, update, delete, mark-in-progress, mark-done, list")
 
 
 tasksdict = [task.to_dict() for task in taskList]
